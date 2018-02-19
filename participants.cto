@@ -1,0 +1,19 @@
+/*
+Model of all the participants of the application
++/
+
+namespace zoom.app.participants
+
+
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+abstract participant Business identified by id {
+  o String id
+  o String password
+  o Address address optional
+}

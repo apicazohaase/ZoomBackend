@@ -1,0 +1,27 @@
+/*
+Main model which includes all participants,assets,transactions and events
+*/
+
+namespace zoom.app.main
+
+import zoom.app.participants.Business
+
+
+
+participant Vendor extends Business {
+}
+
+participant Client extends Business {
+}
+
+participant Transport extends Business {
+}
+
+asset Product identified by id{
+    --> Vendor owner
+    --> Client Client
+    --> Transport transportAgency
+    o String id
+    o Double price
+    o Double weight
+}
