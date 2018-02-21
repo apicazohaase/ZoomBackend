@@ -6,14 +6,18 @@ namespace zoom.app.participants
 
 
 concept Address {
-  o String city optional
+  o String city
   o String country
-  o String street optional
-  o String zip optional
+  o String localidad
+  o String street
+  
 }
 
 abstract participant Business identified by id {
   o String id
+  o String name
   o String password
-  o Address address optional
+  o String confirmPassword
+  o String mail
+  o Integer number
 }
