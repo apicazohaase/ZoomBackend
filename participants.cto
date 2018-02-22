@@ -5,14 +5,6 @@ Model of all the participants of the application
 namespace zoom.app.participants
 
 
-concept Address {
-  o String city
-  o String country
-  o String localidad
-  o String street
-  
-}
-
 abstract participant Business identified by id {
   o String id
   o String name
@@ -20,4 +12,8 @@ abstract participant Business identified by id {
   o String confirmPassword
   o String mail
   o Integer number
+  o String city
+  o String country
+  o String localidad
+  o String street
 }

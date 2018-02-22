@@ -49,6 +49,46 @@ function login(login){
 */
 
 function register(register){
+    var timestamp = generateId();
+    register.existingClient = existingClient;
+    register.name = name;
+    register.password = password;
+    register.confirmPassword = confirmPassword;
+    register.mail = mail;
+    register.number = number;
+    register.city = city;
+    register.country = country;
+    register.localidad = localidad;
+    register.street = street;
+    var existingName;
+
+    return getParticipantRegistry(existingClient.getFullyQualifiedType())
+    .then(function (participantRegistry){
+        return participantRegistry.get(existingClient.id);
+    }).then(function (existingClient){
+        existingName = existingClient.name;
+        return getParticipantRegistry('zoom.app.main.Client')
+    }).then(function (clientRegistry){
+        var newClient = getFactory().newResource('zoom.app.main', 'Client', timestamp);
+        newClient.name = name;
+        newClient.password = password;
+        newClient.confirmPassword = confirmPassword;
+        newClient.mail = mail;
+        newClient.number = number;
+        newClient.city = city;
+        nreClient.country = country;
+        newClient.localidad = localidad;
+        newClient.street = street;
+        if(newClient.password == newClient.confirmPassword){
+            if(existingName !== newClient.name){
+                clientRegistry.add(newClient);
+            }else{
+                throw new Error('Existing name');
+            }
+        }else{
+            throw new Error('Passwords dont match');
+        }
+    });
 
 }
 
