@@ -2,26 +2,22 @@
 Main model which includes all participants,assets,transactions and events
 */
 
-namespace zoom.app.main
+namespace zoom.app
 
 import zoom.app.participants.Business
 
-enum TypeParticipant {
-    o VENDOR
-    o CLIENT
-    o TRANSPORT
-}
+
 
 participant Vendor extends Business {
-    o TypeParticipant participante default = "VENDOR"
+    
 }
 
 participant Client extends Business {
-    o TypeParticipant participante default = "CLIENT"
+   
 }
 
 participant Transport extends Business {
-    o TypeParticipant participante default = "TRANSPORT"
+    
 }
 
 asset Product identified by id{
@@ -34,7 +30,6 @@ asset Product identified by id{
 }
 
 transaction Register{
-    -->Client existingClient
     o Client client
 }
 
@@ -42,4 +37,7 @@ transaction Login{
     --> Business user
     //o String name
     o String password
+}
+
+transaction SetupZoom{
 }

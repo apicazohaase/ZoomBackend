@@ -1,19 +1,25 @@
 /*
 Model of all the participants of the application
-+/
+*/
 
 namespace zoom.app.participants
 
 
-abstract participant Business identified by id {
+participant Business identified by id {
   o String id
   o String name
   o String password
   o String confirmPassword
   o String mail
-  o Integer number
-  o String city
-  o String country
-  o String localidad
-  o String street
+  o Integer number optional
+  o String city optional
+  o String localidad optional
+  o String street optional
+  o TypeParticipant participante
+}
+
+enum TypeParticipant {
+    o VENDOR
+    o CLIENT
+    o TRANSPORT
 }
