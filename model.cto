@@ -7,17 +7,22 @@ namespace zoom.app
 import zoom.app.participants.Business
 
 
+enum TypeParticipant {
+    o VENDOR
+    o CLIENT
+    o TRANSPORT
+}
 
 participant Vendor extends Business {
-    
+    o TypeParticipant participante default = 'VENDOR'
 }
 
 participant Client extends Business {
-   
+   o TypeParticipant participante default = 'CLIENT'
 }
 
 participant Transport extends Business {
-    
+    o TypeParticipant participante default = 'TRANSPORT'
 }
 
 asset Product identified by id{
@@ -27,17 +32,32 @@ asset Product identified by id{
     o String id
     o Double price
     o Double weight
+    o String description
+    o STATUS status
+}
+
+enum STATUS {
+    o NOTSOLD
+    o SOLD
+    o INTRANSIT
+    o DELIVERED
 }
 
 transaction Register{
     o Client client
+    
 }
 
 transaction Login{
     --> Business user
-    //o String name
+    o String name
     o String password
 }
 
 transaction SetupZoom{
+}
+
+transaction buyAProduct{
+    --> Client client
+
 }

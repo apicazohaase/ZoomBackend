@@ -4,11 +4,17 @@
 * @transaction
 */
 
+function setupDemo(){
+  createTransport();
+  createVendor();
+}
+
 
 function createVendor(){
+  var timestamp = generateId();
   return getParticipantRegistry('zoom.app.Vendor')
   	.then(function (participantRegistry){
-    	var vendor = getFactory().newResource('zoom.app','Vendor', '1');
+    	var vendor = getFactory().newResource('zoom.app','Vendor', timestamp);
     	vendor.name = 'Vendor';
     	vendor.password = '1234';
     	vendor.confirmPassword = '1234';
@@ -22,26 +28,27 @@ function createVendor(){
 }
 
 function createTransport(){
+  var timestamp = generateId();
   return getParticipantRegistry('zoom.app.Transport')
   	.then(function (participantRegistry){
-    	var transport = getFactory().newResource('zoom.app','Transport', '2');
-    	transport.name = 'Transport';
-    	transport.password = '1234';
-    	transport.confirmPassword = '1234';
-    	transport.mail = 'transport@zoom.com';
-    	transport.participante = 'TRANSPORT';
-    return participantRegistry.add(transport);
+    	var transportista = getFactory().newResource('zoom.app','Transport', timestamp);
+    	transportista.name = 'Transport';
+    	transportista.password = '123';
+    	transportista.confirmPassword = '123';
+    	transportista.mail = 'transport@zoom.com';
+    	transportista.participante = 'TRANSPORT';
+    return participantRegistry.add(transportista);
   	})
   .catch(function(error){
     throw new Error(error);
   	});
 }
 
-function setupDemo(){
-  
-  
-  createTransport();
-  createVendor();
+
+
+//Id generado a partir de la fecha actual
+function generateId(){
+    return String(Math.round(new Date().getTime()/1000));
 }
 
 
