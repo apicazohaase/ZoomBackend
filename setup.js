@@ -14,7 +14,7 @@ function createVendor(){
   var timestamp = generateId();
   return getParticipantRegistry('zoom.app.Vendor')
   	.then(function (participantRegistry){
-    	var vendor = getFactory().newResource('zoom.app','Vendor', timestamp);
+    	var vendor = getFactory().newResource('zoom.app','Vendor', '1');
     	vendor.name = 'Vendor';
     	vendor.password = '1234';
     	vendor.confirmPassword = '1234';
@@ -31,7 +31,7 @@ function createTransport(){
   var timestamp = generateId();
   return getParticipantRegistry('zoom.app.Transport')
   	.then(function (participantRegistry){
-    	var transportista = getFactory().newResource('zoom.app','Transport', timestamp);
+    	var transportista = getFactory().newResource('zoom.app','Transport', '1');
     	transportista.name = 'Transport';
     	transportista.password = '123';
     	transportista.confirmPassword = '123';

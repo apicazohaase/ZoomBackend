@@ -26,7 +26,7 @@ function register(register){
         */
         return getParticipantRegistry('zoom.app.Client')
     	.then(function (clientRegistry){
-        var newClient = getFactory().newResource('zoom.app', 'Client', timestamp);
+        var newClient = getFactory().newResource('zoom.app', 'Client', '1');
         newClient.name = name;
       	newClient.participante = 'CLIENT';
         newClient.password = password;
@@ -55,42 +55,10 @@ function register(register){
 
 function login(login){
     //var accepted=false;
-    var user = login.user;
+    var user = login.defaultUser;
     var password = login.password;
     var name = login.name;
 
-
-    /*   
-    return getParticipantRegistry(user.getFullyQualifiedType()).
-    then(function (participantRegistry){
-        return participantRegistry.getParticipant(user.id);
-    }).then(function (userParticipant){
-        if(userParticipant.name==="VENDOR"){
-            return getParticipantRegistry("zoom.app.Vendor")
-            .then(function (vendorParticipant){
-                if(vendorParticipant.password != password || vendorParticipant.name != name){
-                    throw new Error('Invalid Credentials');
-                }
-            });
-
-        }else if(userParticipant.name==="CLIENT"){
-            return getParticipantRegistry("zoom.app.Client")
-            .then(function (clientParticipant){
-                if(clientParticipant.password != password || clientParticipant.name != name){
-                    throw new Error('Invalid Credentials');
-                }
-            });
-        }else if(userParticipant.name==="TRANSPORT"){
-            return getParticipantRegistry("zoom.app.Client")
-            .then(function (transportParticipant){
-                if(transportParticipant.password != password || transportParticipant.name != name){
-                    throw new Error('Invalid Credentials');
-                }
-            });
-        }
-        
-    });
-}*/
 
     if(user.participante==="VENDOR"){
         return getParticipantRegistry('zoom.app.Vendor')
@@ -99,10 +67,9 @@ function login(login){
       })
       .then(function (newUser) {
        if(newUser.password != password || newUser.name != name){
-          throw new Error('Invalid credentials');
-          break;        
+          throw new Error('Invalid credentials');      
       }
-     })
+     });
     }else if(user.participante==="TRANSPORT"){
       return getParticipantRegistry('zoom.app.Transport')
       .then(function (participantRegistry) {
@@ -110,10 +77,9 @@ function login(login){
       })
       .then(function (newUser) {
        if(newUser.password != password || newUser.name != name){
-          throw new Error('Invalid credentials');
-          break;         
+          throw new Error('Invalid credentials');        
       }
-    })
+    });
     }else if(user.participante==="CLIENT"){
       return getParticipantRegistry('zoom.app.Client')
       .then(function (participantRegistry) {
@@ -121,10 +87,9 @@ function login(login){
       })
       .then(function (newUser) {
        if(newUser.password != password || newUser.name != name){
-          throw new Error('Invalid credentials');
-          break;       
+          throw new Error('Invalid credentials');     
       }
-       })
+       });
       
 }
 else{
