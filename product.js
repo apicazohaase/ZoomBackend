@@ -10,8 +10,10 @@ function buyAProduct(buyAProduct){
     var product = buyAProduct.product;
     var vendor = buyAProduct.vendor;
     var transport = buyAProduct.transport;
-    product.state = 'SOLD';
+    product.status = 'SOLD';
+    
     //Compruebo existencia de Cliente, Producto y Vendor
+    /*
     return getParticipantRegistry(client.getFullyQualifiedType()).
     then(function (clientRegistry){
         return clientRegistry.get(clientRegistry.id);
@@ -27,30 +29,34 @@ function buyAProduct(buyAProduct){
                 return transportRegistry.get(transportRegistry.id);
             }).
             then(function (existingProduct){
-                return getAssetRegistry(product.getFullyQualifiedType()).
-                then(function (productRegistry){
-                    return productRegistry.get(product.id);
-                }).then(function (assetRegistry){
-                    return assetRegistry.update(product);
-                }).then(function (orderRegistry){
-                    var order = newResource().getFactory('zoom.app', 'Order', timestamp);
-                    order.owner = vendor;
-                    order.client = client;
-                    order.date = new Date();
-                    order.transportAgency = transport;
-                    order.status = 'PENDING';
-                    order.product = product;
-                    return orderRegistry.add(order);
+                */
+               
+                return getAssetRegistry('zoom.app.Product').
+                then(function (productAsset){
+                    return productAsset.update(product);
+                }).then(function (order){
+                    return getAssetRegistry('zoom.app.Order')
+                    .then(function (orderRegistry){
+                        var order = newResource().getFactory('zoom.app', 'Order', timestamp);
+                        order.owner = vendor;
+                        order.client = client;
+                        order.date = new Date();
+                        order.transportAgency = transport;
+                        order.status = 'PENDING';
+                        order.product = product;
+                        return orderRegistry.add(order);
+                    })
+                    
                 }) .catch(function (error) {
                     throw new Error(error);
               });
                     
-
+/*
                 })
             })
         })
     
-    
+    */
 }
 
 
