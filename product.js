@@ -28,7 +28,7 @@ function buyAProduct(buyAProduct){
                 return getAssetRegistry('zoom.app.Product')-
                 then(function (assetRegistry){
                     var product = getFactory().newResource('zoom.app', 'Product', timestamp);
-                    product...
+                    product.
                 })
             })
         })
