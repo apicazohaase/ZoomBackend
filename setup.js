@@ -4,9 +4,9 @@
 * @transaction
 */
 
-function setupDemo(){
+function setupZoom(){
   createTransport();
-  createVendor();
+	createVendor();
 }
 
 

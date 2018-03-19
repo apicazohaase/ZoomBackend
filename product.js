@@ -7,32 +7,50 @@
 function buyAProduct(buyAProduct){
     var timestamp = generateId();
     var client = buyAProduct.client;
-    var transport = buyAProduct.transport;
+    var product = buyAProduct.product;
     var vendor = buyAProduct.vendor;
-    //Compruebo existencia de Cliente, Transportista y Vendor
-    return getParticipantRegistry('zoom.app.Client').
+    var transport = buyAProduct.transport;
+    product.state = 'SOLD';
+    //Compruebo existencia de Cliente, Producto y Vendor
+    return getParticipantRegistry(client.getFullyQualifiedType()).
     then(function (clientRegistry){
-        return clientRegistry.getParticipant(clientRegistry.id);
+        return clientRegistry.get(clientRegistry.id);
     }).
     then(function(userClient){
-        return getParticipantRegistry('zoom.app.Vendor').
+        return getParticipantRegistry(vendor.getFullyQualifiedType()).
         then(function (vendorRegistry){
-            return vendorRegistry.getParticipant(vendorRegistry.id);
+            return vendorRegistry.get(vendorRegistry.id);
         }).
         then(function (userVendor){
-            return getParticipantRegistry('zoom.app.Transport').
+            return getParticipantRegistry(transport.getFullyQualifiedType()).
             then(function (transportRegistry){
-                return transportRegistry.getParticipant(transportRegistry.id);
+                return transportRegistry.get(transportRegistry.id);
             }).
-            then(function (userTransport){
-                return getAssetRegistry('zoom.app.Product')-
-                then(function (assetRegistry){
-                    var product = getFactory().newResource('zoom.app', 'Product', timestamp);
-                    product.
+            then(function (existingProduct){
+                return getAssetRegistry(product.getFullyQualifiedType()).
+                then(function (productRegistry){
+                    return productRegistry.get(product.id);
+                }).then(function (assetRegistry){
+                    return assetRegistry.update(product);
+                }).then(function (orderRegistry){
+                    var order = newResource().getFactory('zoom.app', 'Order', timestamp);
+                    order.owner = vendor;
+                    order.client = client;
+                    order.date = new Date();
+                    order.transportAgency = transport;
+                    order.status = 'PENDING';
+                    order.product = product;
+                    return orderRegistry.add(order);
+                }) .catch(function (error) {
+                    throw new Error(error);
+              });
+                    
+
                 })
             })
         })
-    })
+    
+    
 }
 
 

@@ -27,8 +27,6 @@ participant Transport extends Business {
 
 asset Product identified by id{
     --> Vendor owner
-    --> Client Client
-    --> Transport transportAgency
     o String id
     o Double price
     o Double weight
@@ -36,9 +34,9 @@ asset Product identified by id{
     o STATUS status
 }
 
-asset Order identifiend by id{
+asset Order identified by id{
     --> Vendor owner
-    --> Client Client
+    --> Client client
     --> Transport transportAgency
     --> Product product
     o String id
@@ -46,6 +44,8 @@ asset Order identifiend by id{
 }
 
 enum ORDERSTATUS {
+    o CONFIRMED
+    o PENDING
     o DELIVERED
     o INTRANSIT
 }
@@ -69,9 +69,14 @@ transaction Login{
 transaction SetupZoom{
 }
 
-transaction buyAProduct{
-    --> Client client
+transaction setupZoom2{
     --> Vendor vendor
+}
+
+transaction BuyAProduct{
+    --> Client client
     --> Transport transport
+    --> Vendor vendor
+    --> Product product
 
 }
