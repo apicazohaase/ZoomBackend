@@ -14,15 +14,15 @@ enum TypeParticipant {
 }
 
 participant Vendor extends Business {
-    o TypeParticipant participante default = 'VENDOR'
+    o TypeParticipant participante default = "VENDOR"
 }
 
 participant Client extends Business {
-   o TypeParticipant participante default = 'CLIENT'
+   o TypeParticipant participante default = "CLIENT"
 }
 
 participant Transport extends Business {
-    o TypeParticipant participante default = 'TRANSPORT'
+    o TypeParticipant participante default = "TRANSPORT"
 }
 
 asset Product identified by id{
@@ -36,11 +36,23 @@ asset Product identified by id{
     o STATUS status
 }
 
+asset Order identifiend by id{
+    --> Vendor owner
+    --> Client Client
+    --> Transport transportAgency
+    --> Product product
+    o String id
+    o ORDERSTATUS status
+}
+
+enum ORDERSTATUS {
+    o DELIVERED
+    o INTRANSIT
+}
+
 enum STATUS {
     o NOTSOLD
     o SOLD
-    o INTRANSIT
-    o DELIVERED
 }
 
 transaction Register{
@@ -49,7 +61,7 @@ transaction Register{
 }
 
 transaction Login{
-    --> Business user
+    --> Business defaultUser
     o String name
     o String password
 }
@@ -59,5 +71,7 @@ transaction SetupZoom{
 
 transaction buyAProduct{
     --> Client client
+    --> Vendor vendor
+    --> Transport transport
 
 }
