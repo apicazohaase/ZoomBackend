@@ -10,7 +10,7 @@ function buyAProduct(buyAProduct){
     var product = buyAProduct.product;
     var vendor = buyAProduct.vendor;
     var transport = buyAProduct.transport;
-    product.status = 'SOLD';
+    //product.status = 'SOLD';
     
     //Compruebo existencia de Cliente, Producto y Vendor
     /*
@@ -30,14 +30,15 @@ function buyAProduct(buyAProduct){
             }).
             then(function (existingProduct){
                 */
-               
+               /*
                 return getAssetRegistry('zoom.app.Product').
                 then(function (productAsset){
                     return productAsset.update(product);
                 }).then(function (order){
+                    */
                     return getAssetRegistry('zoom.app.Order')
                     .then(function (orderRegistry){
-                        var order = newResource().getFactory('zoom.app', 'Order', timestamp);
+                        var order = getFactory().newResource('zoom.app', 'Order', timestamp);
                         order.owner = vendor;
                         order.client = client;
                         order.date = new Date();
@@ -47,7 +48,7 @@ function buyAProduct(buyAProduct){
                         return orderRegistry.add(order);
                     })
                     
-                }) .catch(function (error) {
+                 .catch(function (error) {
                     throw new Error(error);
               });
                     
@@ -57,6 +58,35 @@ function buyAProduct(buyAProduct){
         })
     
     */
+}
+
+/*
+* Register transaction processor function
+* @param  {zoom.app.ConfirmationOrder} confirmationOrder The ConfirmationOrder transaction instance
+* @transaction
+*/
+
+function confirmationOrder(confirmationOrder){
+    var order = confirmationOrder.order;
+    var vendor = confirmationOrder.vendor;
+    var product = confirmationOrder.product;
+
+    return getAssetRegistry('zoom.app.Product')
+    .then(function(existingProduct){
+        if(existingProduct.status != 'NOTSOLD'){
+            order.status = 'DECLINED';
+        }
+        else{
+            product.status = 'SOLD';
+            order.status = 'CONFIRMED';
+        }
+
+        return existingProduct.update(product);
+
+    })
+    .then(function (orderStatus){
+        orderStatus.update(order);
+    })
 }
 
 

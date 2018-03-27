@@ -41,12 +41,14 @@ asset Order identified by id{
     --> Product product
     o String id
     o ORDERSTATUS status
+    o DateTime date
 }
 
 enum ORDERSTATUS {
     o CONFIRMED
     o PENDING
     o DELIVERED
+    o DECLINED
     o INTRANSIT
 }
 
@@ -69,7 +71,7 @@ transaction Login{
 transaction SetupZoom{
 }
 
-transaction setupZoom2{
+transaction SetupZoom2{
     --> Vendor vendor
 }
 
@@ -79,4 +81,10 @@ transaction BuyAProduct{
     --> Vendor vendor
     --> Product product
 
+}
+
+transaction ConfirmationOrder{
+    --> Order order
+    --> Vendor vendor
+    --> Product product
 }
