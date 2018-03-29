@@ -13,26 +13,30 @@ function setupZoom2(setupZoom2){
        var product3 = getFactory().newResource('zoom.app', 'Product', '3');
        var product4 = getFactory().newResource('zoom.app', 'Product', '4');
        product1.price = 25.99;
-       product1.weight = 1.25;
-       product1.description = 'Se trata de un ratón con una iluminación LED';
+       product1.name = 'Logitech G Pro'
+       product1.weight = 0.93;
+       product1.description = 'Ratón para gaming (RGB, 6 botones programables) color negro';
        product1.status = 'NOTSOLD';
        product1.owner = owner;
 
-       product2.price = 39.99;
+       product2.price = 56.99;
+       product2.name = 'Logitech G213'
        product2.weight = 2.50;
-       product2.description = 'Se trata de un teclado mecánico';
+       product2.description = 'Teclado para gaming Prodigy con retroiluminación RGB y distribución QWERTY español';
        product2.status = 'NOTSOLD';
        product2.owner = owner;
 
-       product3.price = 149.99;
-       product3.weight = 3.75;
-       product3.description = 'Se trata de un monitor ASUS LED diseñado para Gaming';
+       product3.price = 222.20;
+       product3.weight = 5.75;
+       product3.name = 'ASUS MX239H';
+       product3.description = 'Monitor de 23" 1920 x 1080 con tecnología LED, color plata';
        product3.status = 'NOTSOLD';
        product3.owner = owner;
 
        product4.price = 59.99;
        product4.weight = 1.45;
-       product4.description = 'Se trata de unos auriculares Logitech diseñados para experiencia Gaming';
+       product4.name = 'Logitech G430';
+       product4.description = 'Auriculares gaming (para PC, Xbox One, PS4 y Switch) color negro y azul';
        product4.status = 'NOTSOLD';
        product4.owner = owner;
 

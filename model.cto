@@ -28,6 +28,7 @@ participant Transport extends Business {
 asset Product identified by id{
     --> Vendor owner
     o String id
+    o String name
     o Double price
     o Double weight
     o String description
