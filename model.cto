@@ -28,7 +28,7 @@ participant Transport extends Business {
 asset Product identified by id{
     --> Vendor owner
     o String id
-    o String name
+  	o String name
     o Double price
     o Double weight
     o String description
@@ -41,6 +41,7 @@ asset Order identified by id{
     --> Transport transportAgency
     --> Product product
     o String id
+  	o String location
     o ORDERSTATUS status
     o DateTime date
 }
@@ -88,4 +89,8 @@ transaction ConfirmationOrder{
     --> Order order
     --> Vendor vendor
     --> Product product
+}
+
+transaction ChangeStatus{
+    --> Order order
 }

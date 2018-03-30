@@ -10,6 +10,7 @@ function buyAProduct(buyAProduct){
     var product = buyAProduct.product;
     var vendor = buyAProduct.vendor;
     var transport = buyAProduct.transport;
+  	var direccion;
     //product.status = 'SOLD';
     
     //Compruebo existencia de Cliente, Producto y Vendor
@@ -36,8 +37,14 @@ function buyAProduct(buyAProduct){
                     return productAsset.update(product);
                 }).then(function (order){
                     */
-                    return getAssetRegistry('zoom.app.Order')
-                    .then(function (orderRegistry){
+  return getParticipantRegistry('zoom.app.Client').
+    then(function (clientRegistry){
+        return clientRegistry.get(client.id);
+    }).
+    then(function(userClient){
+    	direccion = userClient.street;
+        return getAssetRegistry('zoom.app.Order')
+        .then(function (orderRegistry){
                         var order = getFactory().newResource('zoom.app', 'Order', timestamp);
                         order.owner = vendor;
                         order.client = client;
@@ -45,6 +52,7 @@ function buyAProduct(buyAProduct){
                         order.transportAgency = transport;
                         order.status = 'PENDING';
                         order.product = product;
+                      	order.location = direccion;
                         return orderRegistry.add(order);
                     })
                     
@@ -52,12 +60,9 @@ function buyAProduct(buyAProduct){
                     throw new Error(error);
               });
                     
-/*
+
                 })
-            })
-        })
-    
-    */
+       
 }
 
 /*
@@ -70,23 +75,58 @@ function confirmationOrder(confirmationOrder){
     var order = confirmationOrder.order;
     var vendor = confirmationOrder.vendor;
     var product = confirmationOrder.product;
+  	var NS_PRODUCT = 'zoom.app.Product';
+  	var NS_ORDER = 'zoom.app.Order';
+  	var sePuede = 'YES';
+/*
+    return getAssetRegistry(NS_ORDER)
+    .then(function (assetOrder){
+    */
+      return getAssetRegistry(NS_PRODUCT)
+      .then(function (assetProduct){
+      		product.status = 'SOLD';
+        return assetProduct.update(product);
+      })
+  		.then(function (orderRegistry){
+        	return getAssetRegistry(NS_ORDER)
+        	.then(function (registry){
+              
+        		order.status = 'CONFIRMED';
+        		
+        return registry.update(order);
+  })
+})
+  
+}
 
-    return getAssetRegistry('zoom.app.Product')
-    .then(function(existingProduct){
-        if(existingProduct.status != 'NOTSOLD'){
-            order.status = 'DECLINED';
-        }
-        else{
-            product.status = 'SOLD';
-            order.status = 'CONFIRMED';
-        }
+/*
+* Register transaction processor function
+* @param  {zoom.app.ChangeStatusToInTransit} changeStatusToInTransit The ChangeStatusToInTransit transaction instance
+* @transaction
+*/
 
-        return existingProduct.update(product);
+function changeStatusToInTransit(changeStatus){
+    var order = changeStatus.order;
+    order.status='INTRANSIT';
+    return getAssetRegistry('zoom.app.Order')
+            .then(function (registry) {
+                  return registry.update(order);
+            });
+}
 
-    })
-    .then(function (orderStatus){
-        orderStatus.update(order);
-    })
+/*
+* Register transaction processor function
+* @param  {zoom.app.ChangeStatusToDelivered} changeStatusToDelivered The ChangeStatusToDelivered transaction instance
+* @transaction
+*/
+
+function changeStatusToInTransit(changeStatus){
+    var order = changeStatus.order;
+    order.status='DELIVERED';
+    return getAssetRegistry('zoom.app.Order')
+            .then(function (registry) {
+                  return registry.update(order);
+            });
 }
 
 
