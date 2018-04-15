@@ -99,6 +99,7 @@ function confirmationOrder(confirmationOrder){
   
 }
 
+
 /*
 * Register transaction processor function
 * @param  {zoom.app.ChangeStatusToInTransit} changeStatusToInTransit The ChangeStatusToInTransit transaction instance
@@ -120,7 +121,7 @@ function changeStatusToInTransit(changeStatus){
 * @transaction
 */
 
-function changeStatusToInTransit(changeStatus){
+function changeStatusToDelivered(changeStatus){
     var order = changeStatus.order;
     order.status='DELIVERED';
     return getAssetRegistry('zoom.app.Order')

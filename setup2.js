@@ -47,6 +47,3 @@ function setupZoom2(setupZoom2){
        throw new Error(error);
 });
 }
-
-
-

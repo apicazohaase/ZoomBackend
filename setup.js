@@ -4,9 +4,9 @@
 * @transaction
 */
 
-function setupZoom(){
+function setupDemo(){
   createTransport();
-	createVendor();
+  createVendor();
 }
 
 
@@ -50,8 +50,3 @@ function createTransport(){
 function generateId(){
     return String(Math.round(new Date().getTime()/1000));
 }
-
-
-
-
-  

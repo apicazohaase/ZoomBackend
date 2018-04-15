@@ -90,7 +90,10 @@ transaction ConfirmationOrder{
     --> Vendor vendor
     --> Product product
 }
+  transaction ChangeStatusToInTransit{
+    --> Order order
+}
 
-transaction ChangeStatus{
+transaction ChangeStatusToDelivered{
     --> Order order
 }
