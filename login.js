@@ -15,24 +15,18 @@ function register(register){
   	var city = register.client.city;
   	var localidad = register.client.localidad;
   	var street = register.client.street;
-    //var existingName;
-
-  	/*
-    return getParticipantRegistry(existingClient.getFullyQualifiedType())
-    .then(function (participantRegistry){
-        return participantRegistry.get(existingClient.id);
-    }).then(function (existingClient){
-        existingName = existingClient.name;
-        */
+  	var tarjetaCredito = register.client.tarjetaCredito;
+   
         return getParticipantRegistry('zoom.app.Client')
     	.then(function (clientRegistry){
-        var newClient = getFactory().newResource('zoom.app', 'Client', '1');
+        var newClient = getFactory().newResource('zoom.app', 'Client', timestamp);
         newClient.name = name;
       	newClient.participante = 'CLIENT';
         newClient.password = password;
         newClient.confirmPassword = confirmPassword;
         newClient.mail = mail;
         newClient.number = number;
+        newClient.tarjetaCredito = tarjetaCredito;
         newClient.city = city;
         newClient.localidad = localidad;
         newClient.street = street;
@@ -91,9 +85,6 @@ function login(login){
       }
        });
       
-}
-else{
-    throw new Error('It should not get in here');
 }
 }
 

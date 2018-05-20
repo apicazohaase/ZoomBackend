@@ -11,32 +11,7 @@ function buyAProduct(buyAProduct){
     var vendor = buyAProduct.vendor;
     var transport = buyAProduct.transport;
   	var direccion;
-    //product.status = 'SOLD';
-    
-    //Compruebo existencia de Cliente, Producto y Vendor
-    /*
-    return getParticipantRegistry(client.getFullyQualifiedType()).
-    then(function (clientRegistry){
-        return clientRegistry.get(clientRegistry.id);
-    }).
-    then(function(userClient){
-        return getParticipantRegistry(vendor.getFullyQualifiedType()).
-        then(function (vendorRegistry){
-            return vendorRegistry.get(vendorRegistry.id);
-        }).
-        then(function (userVendor){
-            return getParticipantRegistry(transport.getFullyQualifiedType()).
-            then(function (transportRegistry){
-                return transportRegistry.get(transportRegistry.id);
-            }).
-            then(function (existingProduct){
-                */
-               /*
-                return getAssetRegistry('zoom.app.Product').
-                then(function (productAsset){
-                    return productAsset.update(product);
-                }).then(function (order){
-                    */
+
   return getParticipantRegistry('zoom.app.Client').
     then(function (clientRegistry){
         return clientRegistry.get(client.id);
@@ -78,10 +53,7 @@ function confirmationOrder(confirmationOrder){
   	var NS_PRODUCT = 'zoom.app.Product';
   	var NS_ORDER = 'zoom.app.Order';
   	var sePuede = 'YES';
-/*
-    return getAssetRegistry(NS_ORDER)
-    .then(function (assetOrder){
-    */
+
       return getAssetRegistry(NS_PRODUCT)
       .then(function (assetProduct){
       		product.status = 'SOLD';

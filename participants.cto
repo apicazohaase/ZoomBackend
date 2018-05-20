@@ -10,6 +10,7 @@ abstract participant Business identified by id {
   o String name
   o String password
   o String confirmPassword
+  o String tarjetaCredito optional
   o String mail optional
   o Integer number optional
   o String city optional
